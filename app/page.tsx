@@ -9,6 +9,11 @@ export default function Home() {
 	const searchTermRef = useRef(null) as unknown as React.MutableRefObject<HTMLInputElement>;
 	const [countryCode, setCountryCode] = useState('');
 
+	let filteredCodes = codes.filter((code) => {
+		//TODO: Find a better way to do this or better yet dont do this and fix images of these countries
+		return !['XK', 'IO', 'PM', 'SJ'].includes(code.isoCode2);
+	});
+
 	function updateCountryCode(countryCode: string, isoCode2: string) {
 		closeDropDown();
 		let countryCodeAndImageHTMLCode = `<img src="https://countryflagicons.com/FLAT/16/${isoCode2}.png" alt=""/> ${countryCode}`;
@@ -68,7 +73,7 @@ export default function Home() {
 					</summary>
 					<input ref={searchTermRef} onKeyUp={(e) => hideLiElementsNotInSearch((e.target as HTMLInputElement).value)} placeholder="Search" className="input input-bordered mt-2 block h-8 w-32 rounded rounded-b-none p-2" />
 					<ul ref={allCountriesRef} className="menu dropdown-content z-10 max-h-36 w-32 flex-row overflow-x-hidden overflow-y-scroll rounded rounded-t-none bg-base-100 shadow">
-						{codes.map((code) =>
+						{filteredCodes.map((code) =>
 							code.countryCodes.map((countryCode) => (
 								<li onClick={() => updateCountryCode(countryCode, code.isoCode2)} key={countryCode}>
 									<a className="w-28">
