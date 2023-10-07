@@ -26,7 +26,7 @@ export default function Home() {
 	function hideLiElementsNotInSearch(searchTerm: string) {
 		let elements = allCountriesRef.current.children;
 		for (let element of elements as unknown as HTMLLIElement[]) {
-			if (element.innerHTML.includes(searchTerm)) {
+			if (element.innerHTML.includes(searchTerm.toUpperCase())) {
 				element.classList.remove('hidden');
 			} else {
 				element.classList.add('hidden');
