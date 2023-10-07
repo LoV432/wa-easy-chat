@@ -47,14 +47,14 @@ export default function Home() {
 		return `https://api.whatsapp.com/send?phone=${countryCode}${number}`;
 	}
 	return (
-		<div className="flex flex-row gap-4">
-			<div className="p-0 m-0 h-0">
+		<div className="flex flex-col sm:flex-row gap-4">
+			<div className="h-12">
 				<details ref={dropdownRef} className="dropdown w-30 mb-32 z-10">
 					<summary ref={countrySlectorText} className="btn w-28 z-10">
 						Select Country
 					</summary>
 					<input ref={searchTermRef} onKeyUp={(e) => hideLiElementsNotInSearch((e.target as HTMLInputElement).value)} placeholder="Search" className="input block input-bordered rounded rounded-b-none p-2 mt-2 ml-3.5 h-8 w-20" />
-					<ul ref={allCountriesRef} className="p-2 ml-3.5 shadow menu dropdown-content z-10 bg-base-100 rounded rounded-t-none w-20 h-fit max-h-56 overflow-scroll flex-row">
+					<ul ref={allCountriesRef} className="p-2 ml-3.5 shadow menu dropdown-content z-10 bg-base-100 rounded rounded-t-none w-20 h-fit max-h-56 overflow-y-scroll overflow-x-hidden flex-row">
 						{codes.map((code) => (
 							<li onClick={() => updateCountryCode(code.countryCodes[0], code.isoCode2)} key={code.isoCode2}>
 								<a className="p-3">
@@ -68,7 +68,7 @@ export default function Home() {
 				</details>
 			</div>
 			<input ref={numberRef} type="text" className="input input-bordered w-full" placeholder="Enter phone number" />
-			<button onClick={generateWhatsappLink} className="btn btn-accent">
+			<button onClick={generateWhatsappLink} className="btn border-none hover:text-white active:text-white bg-emerald-400 hover:bg-emerald-500 active:bg-emerald-500">
 				Chat!
 			</button>
 		</div>
