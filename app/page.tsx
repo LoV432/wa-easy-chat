@@ -27,7 +27,8 @@ export default function Home() {
 			<div className="p-0 m-0 h-0">
 				<details ref={dropdownRef} className="dropdown w-30 mb-32 z-10">
 					<summary className="btn w-28 z-10">FLAG PK +92</summary>
-					<ul className="p-2 mt-2 ml-3.5 shadow menu dropdown-content z-10 bg-base-100 rounded w-20 h-56 overflow-scroll flex-row">
+					<input placeholder="Search" className="input block input-bordered rounded rounded-b-none p-2 mt-2 ml-3.5 h-8 w-20" />
+					<ul className="p-2 ml-3.5 shadow menu dropdown-content z-10 bg-base-100 rounded rounded-t-none w-20 h-56 overflow-scroll flex-row">
 						{codes.map((code) => (
 							<li onClick={() => setCountryCode(code.countryCodes[0])} key={code.country}>
 								<a className="p-3">
@@ -40,7 +41,7 @@ export default function Home() {
 					<div className="w-screen h-screen fixed top-0 left-0 right-0 -z-40" onClick={closeDropDown}></div>
 				</details>
 			</div>
-			<input ref={numberRef} type="text" className="input input-bordered w-full max-w-xs" placeholder="Enter phone number" />
+			<input ref={numberRef} type="text" className="input input-bordered w-full" placeholder="Enter phone number" />
 			<button onClick={generateWhatsappLink} className="btn btn-accent">
 				Chat!
 			</button>
