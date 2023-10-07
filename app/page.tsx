@@ -58,7 +58,7 @@ export default function Home() {
 					<ul ref={allCountriesRef} className="menu dropdown-content z-10 max-h-36 w-32 flex-row overflow-x-hidden overflow-y-scroll rounded rounded-t-none bg-base-100 shadow">
 						{codes.map((code) =>
 							code.countryCodes.map((countryCode) => (
-								<li onClick={() => updateCountryCode(countryCode, code.isoCode2)} key={code.isoCode2}>
+								<li onClick={() => updateCountryCode(countryCode, code.isoCode2)} key={countryCode}>
 									<a className="w-28">
 										<img className="inline" src={`https://countryflagicons.com/FLAT/16/${code.isoCode2}.png`} alt={``} />
 										{countryCode}
