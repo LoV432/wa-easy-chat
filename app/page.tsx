@@ -26,7 +26,7 @@ export default function Home() {
 	function hideLiElementsNotInSearch(searchTerm: string) {
 		let elements = allCountriesRef.current.children;
 		for (let element of elements as unknown as HTMLLIElement[]) {
-			if (element.innerText.includes(searchTerm)) {
+			if (element.innerHTML.includes(searchTerm)) {
 				element.classList.remove('hidden');
 			} else {
 				element.classList.add('hidden');
@@ -49,20 +49,22 @@ export default function Home() {
 	return (
 		<div className="flex flex-col gap-4 sm:flex-row">
 			<div className="h-12">
-				<details ref={dropdownRef} className="w-30 dropdown z-10 mb-32">
+				<details ref={dropdownRef} className="dropdown z-10 mb-32 w-28">
 					<summary ref={countrySlectorText} className="btn z-10 w-28">
 						Select Country
 					</summary>
-					<input ref={searchTermRef} onKeyUp={(e) => hideLiElementsNotInSearch((e.target as HTMLInputElement).value)} placeholder="Search" className="input input-bordered ml-3.5 mt-2 block h-8 w-20 rounded rounded-b-none p-2" />
-					<ul ref={allCountriesRef} className="menu dropdown-content z-10 ml-3.5 h-fit max-h-56 w-20 flex-row overflow-x-hidden overflow-y-scroll rounded rounded-t-none bg-base-100 p-2 shadow">
-						{codes.map((code) => (
-							<li onClick={() => updateCountryCode(code.countryCodes[0], code.isoCode2)} key={code.isoCode2}>
-								<a className="p-3">
-									<img className="inline" src={`https://countryflagicons.com/FLAT/16/${code.isoCode2}.png`} alt={``} />
-									{code.isoCode2}
-								</a>
-							</li>
-						))}
+					<input ref={searchTermRef} onKeyUp={(e) => hideLiElementsNotInSearch((e.target as HTMLInputElement).value)} placeholder="Search" className="input input-bordered mt-2 block h-8 w-32 rounded rounded-b-none p-2" />
+					<ul ref={allCountriesRef} className="menu dropdown-content z-10 max-h-36 w-32 flex-row overflow-x-hidden overflow-y-scroll rounded rounded-t-none bg-base-100 shadow">
+						{codes.map((code) =>
+							code.countryCodes.map((countryCode) => (
+								<li onClick={() => updateCountryCode(countryCode, code.isoCode2)} key={code.isoCode2}>
+									<a className="w-28">
+										<img className="inline" src={`https://countryflagicons.com/FLAT/16/${code.isoCode2}.png`} alt={``} />
+										{countryCode}
+									</a>
+								</li>
+							))
+						)}
 					</ul>
 					<div className="fixed left-0 right-0 top-0 -z-40 h-screen w-screen" onClick={closeDropDown}></div>
 				</details>
