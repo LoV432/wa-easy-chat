@@ -4,10 +4,22 @@ import React, { useState, useRef } from 'react';
 export default function Home() {
 	const numberRef = useRef(null) as unknown as React.MutableRefObject<HTMLInputElement>;
 	const dropdownRef = useRef(null) as unknown as React.MutableRefObject<HTMLDetailsElement>;
+	const allCountriesRef = useRef(null) as unknown as React.MutableRefObject<HTMLUListElement>;
 	const [countryCode, setCountryCode] = useState('');
 
 	function closeDropDown() {
 		dropdownRef.current.removeAttribute('open');
+	}
+
+	function hideLiElementsNotInSearch(searchTerm: string) {
+		let elements = allCountriesRef.current.children;
+		for (let element of elements as unknown as HTMLLIElement[]) {
+			if (element.innerText.includes(searchTerm)) {
+				element.classList.remove('hidden');
+			} else {
+				element.classList.add('hidden');
+			}
+		}
 	}
 
 	function generateWhatsappLink() {
@@ -27,10 +39,10 @@ export default function Home() {
 			<div className="p-0 m-0 h-0">
 				<details ref={dropdownRef} className="dropdown w-30 mb-32 z-10">
 					<summary className="btn w-28 z-10">FLAG PK +92</summary>
-					<input placeholder="Search" className="input block input-bordered rounded rounded-b-none p-2 mt-2 ml-3.5 h-8 w-20" />
-					<ul className="p-2 ml-3.5 shadow menu dropdown-content z-10 bg-base-100 rounded rounded-t-none w-20 h-56 overflow-scroll flex-row">
+					<input onKeyUp={(e) => hideLiElementsNotInSearch((e.target as HTMLInputElement).value)} placeholder="Search" className="input block input-bordered rounded rounded-b-none p-2 mt-2 ml-3.5 h-8 w-20" />
+					<ul ref={allCountriesRef} className="p-2 ml-3.5 shadow menu dropdown-content z-10 bg-base-100 rounded rounded-t-none w-20 h-fit max-h-56 overflow-scroll flex-row">
 						{codes.map((code) => (
-							<li onClick={() => setCountryCode(code.countryCodes[0])} key={code.country}>
+							<li onClick={() => setCountryCode(code.countryCodes[0])} key={code.isoCode2}>
 								<a className="p-3">
 									<img className="inline" src={`https://countryflagicons.com/FLAT/16/${code.isoCode2}.png`} alt={``} />
 									{code.isoCode2}
