@@ -11,12 +11,12 @@ export default function Home() {
 
 	let filteredCodes = codes.filter((code) => {
 		//TODO: Find a better way to do this or better yet dont do this and fix images of these countries
-		return !['XK', 'IO', 'PM', 'SJ'].includes(code.isoCode2);
+		return !['AN'].includes(code.isoCode2);
 	});
 
 	function updateCountryCode(countryCode: string, isoCode2: string) {
 		closeDropDown();
-		let countryCodeAndImageHTMLCode = `<img src="https://countryflagicons.com/FLAT/16/${isoCode2}.png" alt=""/> ${countryCode}`;
+		let countryCodeAndImageHTMLCode = `<img class="inline w-4" src="https://flagcdn.com/${isoCode2.toLowerCase()}.svg" alt=""/> ${countryCode}`;
 		countrySlectorText.current.innerHTML = countryCodeAndImageHTMLCode;
 		setCountryCode(countryCode);
 	}
@@ -77,7 +77,7 @@ export default function Home() {
 							code.countryCodes.map((countryCode) => (
 								<li onClick={() => updateCountryCode(countryCode, code.isoCode2)} key={countryCode}>
 									<a className="w-28">
-										<img className="inline" src={`https://countryflagicons.com/FLAT/16/${code.isoCode2}.png`} alt={``} />
+										<img className={`inline w-4 ${code.isoCode2.toUpperCase()}`} src={`https://flagcdn.com/${code.isoCode2.toLowerCase()}.svg`} alt={``} />
 										{countryCode}
 									</a>
 								</li>
