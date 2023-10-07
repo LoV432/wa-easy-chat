@@ -36,15 +36,16 @@ export default function Home() {
 
 	function generateWhatsappLink() {
 		let number = numberRef.current.value;
-		console.log(`https://api.whatsapp.com/send?phone=${countryCode}${number}`);
 		let completeNuber = countryCode + number;
 		// Remove all spaces and - and + from number
 		completeNuber = completeNuber.replace(/\s/g, '');
 		completeNuber = completeNuber.replace(/-/g, '');
 		completeNuber = completeNuber.replace(/\+/g, '');
-		console.log(`https://api.whatsapp.com/send?phone=${completeNuber}`);
-		//window.open(`https://api.whatsapp.com/send?phone=${countryCode}${number}`, '_blank');
-		return `https://api.whatsapp.com/send?phone=${countryCode}${number}`;
+		if (process.env.NODE_ENV === 'development') {
+			console.log(`https://api.whatsapp.com/send?phone=${countryCode}${number}`);
+		} else {
+			window.open(`https://api.whatsapp.com/send?phone=${countryCode}${number}`, '_blank');
+		}
 	}
 	return (
 		<div className="flex flex-col gap-4 sm:flex-row">
