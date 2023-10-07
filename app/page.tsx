@@ -5,10 +5,22 @@ export default function Home() {
 	const numberRef = useRef(null) as unknown as React.MutableRefObject<HTMLInputElement>;
 	const dropdownRef = useRef(null) as unknown as React.MutableRefObject<HTMLDetailsElement>;
 	const allCountriesRef = useRef(null) as unknown as React.MutableRefObject<HTMLUListElement>;
+	const countrySlectorText = useRef(null) as unknown as React.MutableRefObject<HTMLDivElement>;
+	const searchTermRef = useRef(null) as unknown as React.MutableRefObject<HTMLInputElement>;
 	const [countryCode, setCountryCode] = useState('');
+
+	function updateCountryCode(countryCode: string, isoCode2: string) {
+		closeDropDown();
+
+		let countryCodeAndImageHTMLCode = `<img src="https://countryflagicons.com/FLAT/16/${isoCode2}.png" alt=""/> ${countryCode}`;
+		countrySlectorText.current.innerHTML = countryCodeAndImageHTMLCode;
+		setCountryCode(countryCode);
+	}
 
 	function closeDropDown() {
 		dropdownRef.current.removeAttribute('open');
+		searchTermRef.current.value = '';
+		hideLiElementsNotInSearch('');
 	}
 
 	function hideLiElementsNotInSearch(searchTerm: string) {
@@ -38,11 +50,13 @@ export default function Home() {
 		<div className="flex flex-row gap-4">
 			<div className="p-0 m-0 h-0">
 				<details ref={dropdownRef} className="dropdown w-30 mb-32 z-10">
-					<summary className="btn w-28 z-10">FLAG PK +92</summary>
-					<input onKeyUp={(e) => hideLiElementsNotInSearch((e.target as HTMLInputElement).value)} placeholder="Search" className="input block input-bordered rounded rounded-b-none p-2 mt-2 ml-3.5 h-8 w-20" />
+					<summary ref={countrySlectorText} className="btn w-28 z-10">
+						Select Country
+					</summary>
+					<input ref={searchTermRef} onKeyUp={(e) => hideLiElementsNotInSearch((e.target as HTMLInputElement).value)} placeholder="Search" className="input block input-bordered rounded rounded-b-none p-2 mt-2 ml-3.5 h-8 w-20" />
 					<ul ref={allCountriesRef} className="p-2 ml-3.5 shadow menu dropdown-content z-10 bg-base-100 rounded rounded-t-none w-20 h-fit max-h-56 overflow-scroll flex-row">
 						{codes.map((code) => (
-							<li onClick={() => setCountryCode(code.countryCodes[0])} key={code.isoCode2}>
+							<li onClick={() => updateCountryCode(code.countryCodes[0], code.isoCode2)} key={code.isoCode2}>
 								<a className="p-3">
 									<img className="inline" src={`https://countryflagicons.com/FLAT/16/${code.isoCode2}.png`} alt={``} />
 									{code.isoCode2}
