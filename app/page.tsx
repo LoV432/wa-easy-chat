@@ -40,7 +40,8 @@ export default function Home() {
 			});
 			let data = await ipData.json();
 			let country = data.country;
-			let countryData = codes.find((code) => code.country.includes(country)) as (typeof codes)[0];
+			let countryData = codes.find((code) => code.country === country) as (typeof codes)[0];
+			if (!countryData) return;
 			updateCountryCode(countryData.countryCodes[0], countryData.isoCode2);
 		})();
 	}, []);
