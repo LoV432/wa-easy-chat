@@ -1,6 +1,6 @@
 'use client';
 import codes from 'country-calling-code';
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 export default function Home() {
 	const numberRef = useRef(null) as unknown as React.MutableRefObject<HTMLInputElement>;
 	const dropdownRef = useRef(null) as unknown as React.MutableRefObject<HTMLDetailsElement>;
@@ -11,7 +11,6 @@ export default function Home() {
 
 	function updateCountryCode(countryCode: string, isoCode2: string) {
 		closeDropDown();
-
 		let countryCodeAndImageHTMLCode = `<img src="https://countryflagicons.com/FLAT/16/${isoCode2}.png" alt=""/> ${countryCode}`;
 		countrySlectorText.current.innerHTML = countryCodeAndImageHTMLCode;
 		setCountryCode(countryCode);
@@ -33,6 +32,18 @@ export default function Home() {
 			}
 		}
 	}
+
+	useEffect(() => {
+		(async () => {
+			let ipData = await fetch('https://nextjs-ip-git-dev-lov432.vercel.app/all', {
+				method: 'GET'
+			});
+			let data = await ipData.json();
+			let country = data.country;
+			let countryData = codes.find((code) => code.country.includes(country)) as (typeof codes)[0];
+			updateCountryCode(countryData.countryCodes[0], countryData.isoCode2);
+		})();
+	}, []);
 
 	function generateWhatsappLink() {
 		let number = numberRef.current.value;
