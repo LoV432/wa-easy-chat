@@ -10,8 +10,8 @@ export default function Home() {
 	const searchTermRef = useRef(null) as unknown as React.MutableRefObject<HTMLInputElement>;
 	const [countryCode, setCountryCode] = useState('');
 
-	function updateCountryCode(countryCode: string, isoCode2: string) {
-		closeDropDown();
+	function updateCountryCode(countryCode: string, isoCode2: string, doCloseDropDown = true) {
+		if (doCloseDropDown) closeDropDown();
 		let countryCodeAndImageHTMLCode = `<img class="inline w-4" src="https://flagcdn.com/${isoCode2.toLowerCase()}.svg" alt=""/> ${countryCode}`;
 		countrySlectorText.current.innerHTML = countryCodeAndImageHTMLCode;
 		setCountryCode(countryCode);
@@ -43,7 +43,7 @@ export default function Home() {
 			let country = data.country;
 			let countryData = codes.find((code) => code.country === country) as (typeof codes)[0];
 			if (!countryData) return;
-			updateCountryCode(countryData.countryCodes[0], countryData.isoCode2);
+			updateCountryCode(countryData.countryCodes[0], countryData.isoCode2, false);
 		})();
 	}, []);
 
