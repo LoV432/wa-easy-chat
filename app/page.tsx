@@ -1,6 +1,7 @@
 'use client';
 import codes from 'country-calling-code';
 import React, { useState, useRef, useEffect } from 'react';
+import Image from 'next/image';
 export default function Home() {
 	const numberRef = useRef(null) as unknown as React.MutableRefObject<HTMLInputElement>;
 	const dropdownRef = useRef(null) as unknown as React.MutableRefObject<HTMLDetailsElement>;
@@ -8,11 +9,6 @@ export default function Home() {
 	const countrySlectorText = useRef(null) as unknown as React.MutableRefObject<HTMLDivElement>;
 	const searchTermRef = useRef(null) as unknown as React.MutableRefObject<HTMLInputElement>;
 	const [countryCode, setCountryCode] = useState('');
-
-	let filteredCodes = codes.filter((code) => {
-		//TODO: Find a better way to do this or better yet dont do this and fix images of these countries
-		return !['AN'].includes(code.isoCode2);
-	});
 
 	function updateCountryCode(countryCode: string, isoCode2: string) {
 		closeDropDown();
@@ -73,11 +69,12 @@ export default function Home() {
 					</summary>
 					<input ref={searchTermRef} onKeyUp={(e) => hideLiElementsNotInSearch((e.target as HTMLInputElement).value)} placeholder="Search" className="input input-bordered mt-2 block h-8 w-32 rounded rounded-b-none p-2" />
 					<ul ref={allCountriesRef} className="menu dropdown-content z-10 max-h-36 w-32 flex-row overflow-x-hidden overflow-y-scroll rounded rounded-t-none bg-base-100 shadow">
-						{filteredCodes.map((code) =>
+						{codes.map((code) =>
 							code.countryCodes.map((countryCode) => (
 								<li onClick={() => updateCountryCode(countryCode, code.isoCode2)} key={countryCode}>
 									<a className="w-28">
-										<img className={`inline w-4 ${code.isoCode2.toUpperCase()}`} src={`https://flagcdn.com/${code.isoCode2.toLowerCase()}.svg`} alt={``} />
+										{/* TODO: Fix countries with broken images */}
+										<Image className={`inline w-4 ${code.isoCode2.toUpperCase()}`} src={`https://flagcdn.com/${code.isoCode2.toLowerCase()}.svg`} width={15} height={15} placeholder={'empty'} alt={``} />
 										{countryCode}
 									</a>
 								</li>
