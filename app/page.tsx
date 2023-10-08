@@ -61,33 +61,39 @@ export default function Home() {
 		}
 	}
 	return (
-		<div className="flex flex-col gap-4 sm:flex-row">
-			<div className="h-12">
-				<details ref={dropdownRef} className="dropdown z-10 mb-32 w-28">
-					<summary ref={countrySlectorText} className="btn z-10 w-28">
-						Select Country
-					</summary>
-					<input ref={searchTermRef} onKeyUp={(e) => hideLiElementsNotInSearch((e.target as HTMLInputElement).value)} placeholder="Search" className="input input-bordered mt-2 block h-8 w-32 rounded rounded-b-none p-2" />
-					<ul ref={allCountriesRef} className="menu dropdown-content z-10 max-h-36 w-32 flex-row overflow-x-hidden overflow-y-scroll rounded rounded-t-none bg-base-100 shadow">
-						{codes.map((code) =>
-							code.countryCodes.map((countryCode) => (
-								<li onClick={() => updateCountryCode(countryCode, code.isoCode2)} key={countryCode}>
-									<a className="w-28">
-										{/* TODO: Fix countries with broken images */}
-										<Image className={`inline w-4 ${code.isoCode2.toUpperCase()}`} src={`https://flagcdn.com/${code.isoCode2.toLowerCase()}.svg`} width={15} height={15} placeholder={'empty'} alt={``} />
-										{countryCode}
-									</a>
-								</li>
-							))
-						)}
-					</ul>
-					<div className="fixed left-0 right-0 top-0 -z-40 h-screen w-screen" onClick={closeDropDown}></div>
-				</details>
+		<div className="flex min-h-screen flex-col place-items-center justify-center gap-14">
+			<h1 className="text-center text-4xl font-bold sm:w-1/2">
+				Send WhatsApp Messages <br /> Hassle-Free
+			</h1>
+			<div className="flex flex-col gap-4 sm:flex-row">
+				<div className="flex h-12 justify-center">
+					<details ref={dropdownRef} className="dropdown z-10 mb-32 w-full sm:w-28">
+						<summary ref={countrySlectorText} className="btn z-10 w-full sm:w-28">
+							Select Country
+						</summary>
+						<input ref={searchTermRef} onKeyUp={(e) => hideLiElementsNotInSearch((e.target as HTMLInputElement).value)} placeholder="Search" className="input input-bordered mt-2 block h-8 w-32 rounded rounded-b-none p-2" />
+						<ul ref={allCountriesRef} className="menu dropdown-content z-10 max-h-36 w-32 flex-row overflow-x-hidden overflow-y-scroll rounded rounded-t-none bg-base-100 shadow">
+							{codes.map((code) =>
+								code.countryCodes.map((countryCode) => (
+									<li onClick={() => updateCountryCode(countryCode, code.isoCode2)} key={countryCode}>
+										<a className="w-28">
+											{/* TODO: Fix countries with broken images */}
+											<Image className={`inline w-4 ${code.isoCode2.toUpperCase()}`} src={`https://flagcdn.com/${code.isoCode2.toLowerCase()}.svg`} width={15} height={15} placeholder={'empty'} alt={``} />
+											{countryCode}
+										</a>
+									</li>
+								))
+							)}
+						</ul>
+						<div className="fixed left-0 right-0 top-0 -z-40 h-screen w-screen" onClick={closeDropDown}></div>
+					</details>
+				</div>
+				<input ref={numberRef} type="text" className="input input-bordered w-full" placeholder="Enter phone number" />
+				<button onClick={generateWhatsappLink} className="btn border-none bg-emerald-400 hover:bg-emerald-500 hover:text-white active:bg-emerald-500 active:text-white">
+					Chat!
+				</button>
 			</div>
-			<input ref={numberRef} type="text" className="input input-bordered w-full" placeholder="Enter phone number" />
-			<button onClick={generateWhatsappLink} className="btn border-none bg-emerald-400 hover:bg-emerald-500 hover:text-white active:bg-emerald-500 active:text-white">
-				Chat!
-			</button>
+			<p className="w-10/12 text-center text-lg sm:w-1/3 sm:text-base">Effortlessly send WhatsApp messages from your computer to any WhatsApp number without the need to add them as contacts. Our simple tool generates API links for seamless communication.</p>
 		</div>
 	);
 }
