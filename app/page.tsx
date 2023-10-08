@@ -40,7 +40,7 @@ export default function Home() {
 
 	useEffect(() => {
 		(async () => {
-			let ipData = await fetch('https://nextjs-ip-git-dev-lov432.vercel.app/all', {
+			let ipData = await fetch('https://ip.monib.xyz/all', {
 				method: 'GET'
 			});
 			let data = await ipData.json();
