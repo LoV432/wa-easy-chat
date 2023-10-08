@@ -3,7 +3,10 @@ import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
 	title: 'Create WA Links',
-	description: 'Generate WhatsApp API links to send messages from your computer to any WhatsApp number without adding them as contacts. Simplify communication effortlessly.'
+	description: 'Generate WhatsApp API links to send messages from your computer to any WhatsApp number without adding them as contacts. Simplify communication effortlessly.',
+	twitter: {
+		card: 'summary'
+	}
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
