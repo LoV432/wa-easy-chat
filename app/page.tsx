@@ -75,12 +75,12 @@ export default function Home() {
 						<ul ref={allCountriesRef} className="menu dropdown-content z-10 max-h-36 w-32 flex-row overflow-x-hidden overflow-y-scroll rounded rounded-t-none bg-base-100 shadow">
 							{codes.map((code) =>
 								code.countryCodes.map((countryCode) => (
-									<li onClick={() => updateCountryCode(countryCode, code.isoCode2)} key={countryCode}>
-										<a className="w-28">
+									<li key={countryCode}>
+										<p onClick={() => updateCountryCode(countryCode, code.isoCode2)} className="w-28">
 											{/* TODO: Fix countries with broken images */}
 											<Image className={`inline w-4 ${code.isoCode2.toUpperCase()}`} src={`https://flagcdn.com/${code.isoCode2.toLowerCase()}.svg`} width={15} height={15} placeholder={'empty'} alt={``} />
 											{countryCode}
-										</a>
+										</p>
 									</li>
 								))
 							)}
