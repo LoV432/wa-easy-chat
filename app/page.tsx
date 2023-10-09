@@ -1,5 +1,5 @@
 'use client';
-import codes from 'country-calling-code';
+import codes, { ICountryCodeItem } from 'country-calling-code';
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 export default function Home() {
@@ -9,15 +9,29 @@ export default function Home() {
 	const countrySlectorText = useRef(null) as unknown as React.MutableRefObject<HTMLDivElement>;
 	const searchTermRef = useRef(null) as unknown as React.MutableRefObject<HTMLInputElement>;
 	const [countryCode, setCountryCode] = useState('');
+	const [maxCountriesEntries, setMaxCountriesEntries] = useState(15);
 
-	function updateCountryCode(countryCode: string, isoCode2: string, doCloseDropDown = true) {
-		if (doCloseDropDown) closeDropDown();
+	function updateCountryCode(countryCode: string, isoCode2: string) {
 		let countryCodeAndImageHTMLCode = `<img class="inline w-4" src="https://flagcdn.com/${isoCode2.toLowerCase()}.svg" alt=""/> ${countryCode}`;
 		countrySlectorText.current.innerHTML = countryCodeAndImageHTMLCode;
 		setCountryCode(countryCode);
 	}
 
-	function closeDropDown() {
+	async function toggleDropDown(e: React.MouseEvent<HTMLDetailsElement>) {
+		e.preventDefault();
+		if (dropdownRef.current.hasAttribute('open')) {
+			closeDropDown();
+		} else {
+			dropdownRef.current.setAttribute('open', '');
+			if (maxCountriesEntries < codes.length) {
+				await new Promise((resolve) => setTimeout(resolve, 1));
+				setMaxCountriesEntries(codes.length);
+			}
+		}
+	}
+
+	function closeDropDown(e?: React.MouseEvent<HTMLDivElement>) {
+		if (e) e.stopPropagation();
 		dropdownRef.current.removeAttribute('open');
 		searchTermRef.current.value = '';
 		hideLiElementsNotInSearch('');
@@ -43,7 +57,7 @@ export default function Home() {
 			let country = data.country;
 			let countryData = codes.find((code) => code.country === country) as (typeof codes)[0];
 			if (!countryData) return;
-			updateCountryCode(countryData.countryCodes[0], countryData.isoCode2, false);
+			updateCountryCode(countryData.countryCodes[0], countryData.isoCode2);
 		})();
 	}, []);
 
@@ -67,23 +81,13 @@ export default function Home() {
 			</h1>
 			<div className="flex flex-col gap-4 sm:flex-row">
 				<div className="flex h-12 justify-center">
-					<details ref={dropdownRef} className="dropdown z-10 mb-32 w-full sm:w-28">
+					<details onClick={toggleDropDown} ref={dropdownRef} className="dropdown z-10 mb-32 w-full sm:w-28">
 						<summary ref={countrySlectorText} className="btn z-10 w-full sm:w-28">
 							Select Country
 						</summary>
 						<input ref={searchTermRef} onKeyUp={(e) => hideLiElementsNotInSearch((e.target as HTMLInputElement).value)} placeholder="Search" className="input input-bordered mt-2 block h-8 w-32 rounded rounded-b-none p-2" />
 						<ul ref={allCountriesRef} className="menu dropdown-content z-10 max-h-36 w-32 flex-row overflow-x-hidden overflow-y-scroll rounded rounded-t-none bg-base-100 shadow">
-							{codes.map((code) =>
-								code.countryCodes.map((countryCode) => (
-									<li key={countryCode}>
-										<p onClick={() => updateCountryCode(countryCode, code.isoCode2)} className="w-28">
-											{/* TODO: Fix countries with broken images */}
-											<Image className={`inline w-4 ${code.isoCode2.toUpperCase()}`} src={`https://flagcdn.com/${code.isoCode2.toLowerCase()}.svg`} width={15} height={15} placeholder={'empty'} alt={``} />
-											{countryCode}
-										</p>
-									</li>
-								))
-							)}
+							<CountriesList codes={codes} updateCountryCode={updateCountryCode} maxEntries={maxCountriesEntries} />
 						</ul>
 						<div className="fixed left-0 right-0 top-0 -z-40 h-screen w-screen" onClick={closeDropDown}></div>
 					</details>
@@ -95,5 +99,19 @@ export default function Home() {
 			</div>
 			<p className="w-10/12 text-center text-lg sm:w-1/3 sm:text-base">Effortlessly send WhatsApp messages from your computer to any WhatsApp number without the need to add them as contacts. Our simple tool generates API links for seamless communication.</p>
 		</div>
+	);
+}
+
+function CountriesList({ codes, updateCountryCode, maxEntries }: { codes: ICountryCodeItem[]; updateCountryCode: (countryCode: string, isoCode2: string) => void; maxEntries: number }) {
+	return codes.slice(0, maxEntries).map((code) =>
+		code.countryCodes.map((countryCode) => (
+			<li key={countryCode}>
+				<p onClick={() => updateCountryCode(countryCode, code.isoCode2)} className="w-28">
+					{/* TODO: Fix countries with broken images */}
+					<Image className={`inline w-4 ${code.isoCode2.toUpperCase()}`} src={`https://flagcdn.com/${code.isoCode2.toLowerCase()}.svg`} width={15} height={15} placeholder={'empty'} alt={``} />
+					{countryCode}
+				</p>
+			</li>
+		))
 	);
 }
