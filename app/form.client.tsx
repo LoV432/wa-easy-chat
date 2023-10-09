@@ -83,7 +83,7 @@ export default function ClientForm() {
 					<summary ref={countrySlectorText} className="btn z-10 w-full sm:w-28">
 						Select Country
 					</summary>
-					<input ref={searchTermRef} onKeyUp={(e) => hideLiElementsNotInSearch((e.target as HTMLInputElement).value)} placeholder="Search" className="input input-bordered mt-2 block h-8 w-32 rounded rounded-b-none p-2" />
+					<input ref={searchTermRef} onClick={(e) => e.stopPropagation()} onKeyUp={(e) => hideLiElementsNotInSearch((e.target as HTMLInputElement).value)} placeholder="Search" className="input input-bordered mt-2 block h-8 w-32 rounded rounded-b-none p-2" />
 					<ul ref={allCountriesRef} className="menu dropdown-content z-10 max-h-36 w-32 flex-row overflow-x-hidden overflow-y-scroll rounded rounded-t-none bg-base-100 shadow">
 						<CountriesList codes={codes} updateCountryCode={updateCountryCode} maxEntries={maxCountriesEntries} />
 					</ul>
