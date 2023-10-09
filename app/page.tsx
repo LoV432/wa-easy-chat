@@ -9,7 +9,7 @@ export default function Home() {
 	const countrySlectorText = useRef(null) as unknown as React.MutableRefObject<HTMLDivElement>;
 	const searchTermRef = useRef(null) as unknown as React.MutableRefObject<HTMLInputElement>;
 	const [countryCode, setCountryCode] = useState('');
-	const [maxCountriesEntries, setMaxCountriesEntries] = useState(0);
+	const [maxCountriesEntries, setMaxCountriesEntries] = useState(15);
 
 	function updateCountryCode(countryCode: string, isoCode2: string) {
 		let countryCodeAndImageHTMLCode = `<img class="inline w-4" src="https://flagcdn.com/${isoCode2.toLowerCase()}.svg" alt=""/> ${countryCode}`;
