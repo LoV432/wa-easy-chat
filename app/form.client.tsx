@@ -52,15 +52,15 @@ export default function ClientForm({ initCountry }: { initCountry: string }) {
 
 	function generateWhatsappLink() {
 		let number = numberRef.current.value;
-		let completeNuber = activeCountry.countryCode + number;
+		let completeNumber = activeCountry.countryCode + number;
 		// Remove all spaces and - and + from number
-		completeNuber = completeNuber.replace(/\s/g, '');
-		completeNuber = completeNuber.replace(/-/g, '');
-		completeNuber = completeNuber.replace(/\+/g, '');
+		completeNumber = completeNumber.replace(/\s/g, '');
+		completeNumber = completeNumber.replace(/-/g, '');
+		completeNumber = completeNumber.replace(/\+/g, '');
 		if (process.env.NODE_ENV === 'development') {
-			console.log(`https://api.whatsapp.com/send?phone=${completeNuber}`);
+			console.log(`https://api.whatsapp.com/send?phone=${completeNumber}`);
 		} else {
-			window.open(`https://api.whatsapp.com/send?phone=${completeNuber}`, '_blank');
+			window.open(`https://api.whatsapp.com/send?phone=${completeNumber}`, '_blank');
 		}
 	}
 
