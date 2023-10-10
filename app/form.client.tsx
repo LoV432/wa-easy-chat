@@ -70,9 +70,9 @@ export default function ClientForm() {
 		completeNuber = completeNuber.replace(/-/g, '');
 		completeNuber = completeNuber.replace(/\+/g, '');
 		if (process.env.NODE_ENV === 'development') {
-			console.log(`https://api.whatsapp.com/send?phone=${countryCode}${number}`);
+			console.log(`https://api.whatsapp.com/send?phone=${completeNuber}`);
 		} else {
-			window.open(`https://api.whatsapp.com/send?phone=${countryCode}${number}`, '_blank');
+			window.open(`https://api.whatsapp.com/send?phone=${completeNuber}`, '_blank');
 		}
 	}
 
