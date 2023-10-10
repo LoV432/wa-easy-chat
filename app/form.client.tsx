@@ -103,7 +103,7 @@ function CountriesList({ codes, setActiveCountry, maxEntries }: { codes: ICountr
 function SelectedCountryDisplay({ activeCountry }: { activeCountry: activeCountryProps['activeCountry'] }) {
 	return (
 		<>
-			<img className="inline w-4" src={`https://flagcdn.com/${activeCountry.countryIsoCode2.toLowerCase()}.svg`} alt="" /> {activeCountry.countryCode}
+			<Image className="inline w-4" src={`https://flagcdn.com/${activeCountry.countryIsoCode2.toLowerCase()}.svg`} width={15} height={15} placeholder={'empty'} alt="" /> {activeCountry.countryCode}
 		</>
 	);
 }
