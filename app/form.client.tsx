@@ -71,8 +71,8 @@ export default function ClientForm({ initCountry }: { initCountry: string }) {
 					<summary className="btn z-10 w-full sm:w-28">
 						<SelectedCountryDisplay activeCountry={activeCountry} />
 					</summary>
-					<input ref={searchTermRef} onClick={(e) => e.stopPropagation()} onKeyUp={(e) => hideLiElementsNotInSearch((e.target as HTMLInputElement).value)} placeholder="Search" className="input input-bordered mt-2 block h-8 w-32 rounded rounded-b-none p-2" />
-					<ul ref={allCountriesRef} className="menu dropdown-content z-10 max-h-36 w-32 flex-row overflow-x-hidden overflow-y-scroll rounded rounded-t-none bg-base-100 shadow">
+					<input ref={searchTermRef} onClick={(e) => e.stopPropagation()} onKeyUp={(e) => hideLiElementsNotInSearch((e.target as HTMLInputElement).value)} placeholder="Search" className="input input-bordered ml-12 mt-2 block h-10 w-32 rounded rounded-b-none p-2 sm:ml-0" />
+					<ul ref={allCountriesRef} className="sm:max-h-auto menu dropdown-content z-10 ml-12 max-h-52 w-32 flex-row overflow-x-hidden overflow-y-scroll rounded rounded-t-none bg-base-100 shadow sm:ml-0">
 						<CountriesList codes={codes} setActiveCountry={setActiveCountry} maxEntries={maxCountriesEntries} />
 					</ul>
 					<div className="fixed left-0 right-0 top-0 -z-40 h-screen w-screen" onClick={closeDropDown}></div>
@@ -90,7 +90,7 @@ function CountriesList({ codes, setActiveCountry, maxEntries }: { codes: ICountr
 	return codes.slice(0, maxEntries).map((code) =>
 		code.countryCodes.map((countryCode) => (
 			<li key={countryCode}>
-				<p onClick={() => setActiveCountry({ countryIsoCode2: code.isoCode2, countryCode })} className="w-28">
+				<p onClick={() => setActiveCountry({ countryIsoCode2: code.isoCode2, countryCode })} className="w-28 p-3">
 					{/* TODO: Fix countries with broken images */}
 					<Image className={`inline w-4 ${code.isoCode2.toUpperCase()}`} src={`https://flagcdn.com/${code.isoCode2.toLowerCase()}.svg`} width={15} height={15} placeholder={'empty'} alt={``} />
 					{countryCode}
