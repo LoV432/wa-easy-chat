@@ -79,7 +79,7 @@ export default function ClientForm({ initCountry }: { initCountry: string }) {
 				</details>
 			</div>
 			<input ref={numberRef} type="text" className="input input-bordered w-full" placeholder="Enter phone number" />
-			<button onClick={generateWhatsappLink} className="btn border-none bg-emerald-400 hover:bg-emerald-500 hover:text-white active:bg-emerald-500 active:text-white">
+			<button onClick={generateWhatsappLink} className="plausible-event-name=Clicked btn border-none bg-emerald-400 hover:bg-emerald-500 hover:text-white active:bg-emerald-500 active:text-white">
 				Chat!
 			</button>
 		</>
