@@ -63,10 +63,15 @@ export default function ClientForm({ initCountry }: { initCountry: string }) {
 		} else {
 			window.open(`https://api.whatsapp.com/send?phone=${completeNumber}`, '_blank');
 		}
+
+		// Analytics
+		// I have no idea how this is working
+		let plausible = (window as any).plausible;
+		plausible('Clicked');
 	}
 
 	return (
-		<form onSubmit={generateWhatsappLink} className="plausible-event-name=Clicked flex flex-col gap-4 sm:flex-row">
+		<form onSubmit={generateWhatsappLink} className="flex flex-col gap-4 sm:flex-row">
 			<div className="flex h-12 justify-center">
 				<details onClick={toggleDropDown} ref={dropdownRef} className="dropdown z-10 mb-32 w-full sm:w-28">
 					<summary className="btn z-10 w-full sm:w-28">
