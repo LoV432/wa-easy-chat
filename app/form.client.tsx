@@ -52,6 +52,12 @@ export default function ClientForm({ initCountry }: { initCountry: string }) {
 
 	function generateWhatsappLink(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
+
+		// Analytics
+		// I have no idea how this is working
+		let plausible = (window as any).plausible;
+		plausible('Clicked');
+
 		let number = numberRef.current.value;
 		let completeNumber = activeCountry.countryCode + number;
 		// Remove all spaces and - and + from number
@@ -63,11 +69,6 @@ export default function ClientForm({ initCountry }: { initCountry: string }) {
 		} else {
 			window.open(`https://api.whatsapp.com/send?phone=${completeNumber}`, '_blank');
 		}
-
-		// Analytics
-		// I have no idea how this is working
-		let plausible = (window as any).plausible;
-		plausible('Clicked');
 	}
 
 	return (
