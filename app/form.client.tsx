@@ -60,7 +60,14 @@ export default function ClientForm({ initCountry }: { initCountry: string }) {
 		if (process.env.NODE_ENV === 'development') {
 			console.log(`https://api.whatsapp.com/send?phone=${completeNumber}`);
 		} else {
-			window.open(`https://api.whatsapp.com/send?phone=${completeNumber}`, '_blank');
+			if ('ontouchstart' in window) {
+				// Opening using _top makes it more consistent on firefox mobile. Not sure why.
+				window.open(`https://api.whatsapp.com/send?phone=${completeNumber}`, '_top');
+			} else {
+				window.open(`https://api.whatsapp.com/send?phone=${completeNumber}`, '_blank');
+			}
+			// @ts-ignore
+			if (typeof plausible === 'function') plausible('Clicked'); // This is coming from plausible script in page.tsx
 		}
 	}
 
@@ -78,8 +85,17 @@ export default function ClientForm({ initCountry }: { initCountry: string }) {
 					<div className="fixed left-0 right-0 top-0 -z-40 h-screen w-screen" onClick={closeDropDown}></div>
 				</details>
 			</div>
-			<input ref={numberRef} type="text" className="input input-bordered w-full" placeholder="Enter phone number" />
-			<button onClick={generateWhatsappLink} className="plausible-event-name=Clicked btn border-none bg-emerald-400 hover:bg-emerald-500 hover:text-white active:bg-emerald-500 active:text-white">
+			<input
+				ref={numberRef}
+				onKeyDown={async (e) => {
+					await new Promise((resolve) => setTimeout(resolve, 1)); // This prevents the pop-up blocking
+					e.key === 'Enter' && generateWhatsappLink();
+				}}
+				type="text"
+				className="input input-bordered w-full"
+				placeholder="Enter phone number"
+			/>
+			<button onClick={generateWhatsappLink} className="btn border-none bg-emerald-400 hover:bg-emerald-500 hover:text-white active:bg-emerald-500 active:text-white">
 				Chat!
 			</button>
 		</>
