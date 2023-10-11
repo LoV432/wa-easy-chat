@@ -52,6 +52,7 @@ export default function ClientForm({ initCountry }: { initCountry: string }) {
 
 	function generateWhatsappLink() {
 		let number = numberRef.current.value;
+		if (number.length === 0) return;
 		let completeNumber = activeCountry.countryCode + number;
 		// Remove all spaces and - and + from number
 		completeNumber = completeNumber.replace(/\s/g, '');
