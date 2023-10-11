@@ -1,7 +1,11 @@
+import Head from 'next/head';
 import ClientForm from './form.client';
 import { headers } from 'next/headers';
 
 export default function Home() {
+	<Head>
+		<script defer data-domain="wa.monib.xyz" src="https://analytics-public.monib.xyz/js/script.tagged-events.js"></script>
+	</Head>;
 	const allHeaders = headers();
 	let country = allHeaders.get('x-vercel-ip-country');
 	if (country === null) country = 'PK';
