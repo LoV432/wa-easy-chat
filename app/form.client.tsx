@@ -65,7 +65,7 @@ export default function ClientForm({ initCountry }: { initCountry: string }) {
 	}
 
 	return (
-		<form onSubmit={(e) => e.preventDefault()} className="flex flex-col gap-4 sm:flex-row">
+		<form onSubmit={(e) => e.preventDefault()} className="plausible-event-name=Clicked flex flex-col gap-4 sm:flex-row">
 			<div className="flex h-12 justify-center">
 				<details onClick={toggleDropDown} ref={dropdownRef} className="dropdown z-10 mb-32 w-full sm:w-28">
 					<summary className="btn z-10 w-full sm:w-28">
@@ -79,7 +79,7 @@ export default function ClientForm({ initCountry }: { initCountry: string }) {
 				</details>
 			</div>
 			<input ref={numberRef} type="text" className="input input-bordered w-full" placeholder="Enter phone number" />
-			<button type="submit" onClick={generateWhatsappLink} className="plausible-event-name=Clicked btn border-none bg-emerald-400 hover:bg-emerald-500 hover:text-white active:bg-emerald-500 active:text-white">
+			<button type="submit" onClick={generateWhatsappLink} className="btn border-none bg-emerald-400 hover:bg-emerald-500 hover:text-white active:bg-emerald-500 active:text-white">
 				Chat!
 			</button>
 		</form>
