@@ -19,10 +19,13 @@ export default function ClientForm({ initCountry }: { initCountry: string }) {
 	const [maxCountriesEntries, setMaxCountriesEntries] = useState(15);
 	const [activeCountry, setActiveCountry] = useState({ countryIsoCode2: initCountry, countryCode: codes.find((code) => code.isoCode2 === initCountry)?.countryCodes[0] });
 
-	async function toggleDropDown(e: React.MouseEvent<HTMLDetailsElement>) {
+	async function toggleDropDown(e: React.MouseEvent<HTMLElement>) {
 		e.preventDefault();
+		e.stopPropagation();
 		if (dropdownRef.current.hasAttribute('open')) {
-			closeDropDown();
+			dropdownRef.current.removeAttribute('open');
+			searchTermRef.current.value = '';
+			hideLiElementsNotInSearch('');
 		} else {
 			dropdownRef.current.setAttribute('open', '');
 			if (maxCountriesEntries < codes.length) {
@@ -30,13 +33,6 @@ export default function ClientForm({ initCountry }: { initCountry: string }) {
 				setMaxCountriesEntries(codes.length);
 			}
 		}
-	}
-
-	function closeDropDown(e?: React.MouseEvent<HTMLDivElement>) {
-		if (e) e.stopPropagation();
-		dropdownRef.current.removeAttribute('open');
-		searchTermRef.current.value = '';
-		hideLiElementsNotInSearch('');
 	}
 
 	function hideLiElementsNotInSearch(searchTerm: string) {
@@ -83,7 +79,7 @@ export default function ClientForm({ initCountry }: { initCountry: string }) {
 					<ul ref={allCountriesRef} className="sm:max-h-auto menu dropdown-content z-10 ml-12 max-h-52 w-32 flex-row overflow-x-hidden overflow-y-scroll rounded rounded-t-none bg-base-100 pt-0 shadow sm:ml-0">
 						<CountriesList codes={codes} setActiveCountry={setActiveCountry} maxEntries={maxCountriesEntries} />
 					</ul>
-					<div className="fixed left-0 right-0 top-0 -z-40 h-screen w-screen" onClick={closeDropDown}></div>
+					<div className="fixed left-0 right-0 top-0 -z-40 h-screen w-screen" onClick={toggleDropDown}></div>
 				</details>
 			</div>
 			<input
