@@ -2,8 +2,8 @@ import './globals.css';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-	title: 'Create WA Links',
-	description: 'Generate WhatsApp API links to send messages from your computer to any WhatsApp number without adding them as contacts. Simplify communication effortlessly.',
+	title: 'WhatsApp Chat Direct - Send Messages Without Saving Numbers',
+	description: 'WhatsApp without saving numbers. Our API link opens direct chats on WhatsApp, allowing you to send messages hassle-free. No need to save contact details!',
 	twitter: {
 		card: 'summary'
 	}

@@ -16,7 +16,9 @@ export default function Home() {
 				<div className="flex flex-col gap-4 sm:flex-row">
 					<ClientForm initCountry={country} />
 				</div>
-				<p className="w-10/12 text-center text-lg text-stone-950 sm:w-1/3 sm:text-base">Effortlessly send WhatsApp messages from your computer to any WhatsApp number without the need to add them as contacts. Our simple tool generates API links for seamless communication.</p>
+				<p className="w-10/12 text-center text-lg text-stone-950 sm:w-1/3 sm:text-base">
+					WhatsApp Chat Direct is your solution for sending WhatsApp messages without the hassle of saving numbers as contacts. Our user-friendly tool generates API links that open direct chats in WhatsApp, streamlining your messaging experience. Say goodbye to cluttered contact lists and hello to seamless communication.
+				</p>
 			</div>
 		</>
 	);
