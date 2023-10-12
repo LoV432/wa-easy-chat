@@ -8,7 +8,7 @@ export default function Home() {
 	if (country === null) country = 'PK';
 	return (
 		<>
-			<Script defer data-domain="wa.monib.xyz" src="https://analytics-public.monib.xyz/js/script.tagged-events.js"></Script>
+			{process.env.PLAUSIBLE_URL && <Script defer data-domain={process.env.PLAUSIBLE_DATA_DOMAIN} src={`https://${process.env.PLAUSIBLE_URL}/js/script.tagged-events.js`}></Script>}
 			<div className="flex min-h-screen flex-col place-items-center justify-center gap-14">
 				<h1 className="text-center text-4xl font-bold sm:w-1/2">
 					Send WhatsApp Messages <br /> Hassle-Free
