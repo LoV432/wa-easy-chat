@@ -100,6 +100,7 @@ export default function ClientForm({ initCountry }: { initCountry: string }) {
 }
 
 function CountriesList({ codes, setActiveCountry, maxEntries }: { codes: ICountryCodeItem[]; setActiveCountry: activeCountryProps['setActiveCountry']; maxEntries: number }) {
+	codes = codes.slice(0, maxEntries);
 	let elements = [] as JSX.Element[];
 	for (let code of codes) {
 		for (let countryCode of code.countryCodes) {
