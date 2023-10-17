@@ -100,17 +100,21 @@ export default function ClientForm({ initCountry }: { initCountry: string }) {
 }
 
 function CountriesList({ codes, setActiveCountry, maxEntries }: { codes: ICountryCodeItem[]; setActiveCountry: activeCountryProps['setActiveCountry']; maxEntries: number }) {
-	return codes.slice(0, maxEntries).map((code) =>
-		code.countryCodes.map((countryCode) => (
-			<li className="border-b first:border-t" key={countryCode}>
-				<p onClick={() => setActiveCountry({ countryIsoCode2: code.isoCode2, countryCode })} className="w-28 rounded-none p-3">
-					{/* TODO: Fix countries with broken images */}
-					<Image className={`inline w-4 ${code.isoCode2.toUpperCase()}`} src={`https://flagcdn.com/${code.isoCode2.toLowerCase()}.svg`} width={15} height={15} placeholder={'empty'} alt={``} />
-					{countryCode}
-				</p>
-			</li>
-		))
-	);
+	let elements = [] as JSX.Element[];
+	for (let code of codes) {
+		for (let countryCode of code.countryCodes) {
+			elements.push(
+				<li className="border-b first:border-t" key={countryCode}>
+					<p onClick={() => setActiveCountry({ countryIsoCode2: code.isoCode2, countryCode })} className="w-28 rounded-none p-3">
+						{/* TODO: Fix countries with broken images */}
+						<Image className={`inline w-4 ${code.isoCode2.toUpperCase()}`} src={`https://flagcdn.com/${code.isoCode2.toLowerCase()}.svg`} width={15} height={15} placeholder={'empty'} alt={``} />
+						{countryCode}
+					</p>
+				</li>
+			);
+		}
+	}
+	return elements;
 }
 
 function SelectedCountryDisplay({ activeCountry }: { activeCountry: activeCountryProps['activeCountry'] }) {
