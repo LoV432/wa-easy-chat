@@ -51,9 +51,12 @@ export default function ClientForm({ initCountry }: { initCountry: string }) {
 		if (number.length === 0) return;
 		let completeNumber = activeCountry.countryCode + number;
 		// Remove all spaces and - and + from number
+		// TODO: Maybe better to use regex to nuke all non-numeric characters?
 		completeNumber = completeNumber.replace(/\s/g, '');
 		completeNumber = completeNumber.replace(/-/g, '');
 		completeNumber = completeNumber.replace(/\+/g, '');
+		completeNumber = completeNumber.replace(/\(/g, '');
+		completeNumber = completeNumber.replace(/\)/g, '');
 		if (process.env.NODE_ENV === 'development') {
 			console.log(`https://api.whatsapp.com/send?phone=${completeNumber}`);
 		} else {
